@@ -11,8 +11,8 @@
 // ----------  --------------- ----------- -------------------------------------------
 // (04/14/24)  Jonathan Roa    1.0         Initial Revision
 
- This project uses a TCL build script to maintain the FPGA
- design.
+ This project targets Digilent ArtyZ7-10 and uses a TCL build 
+ script to maintain the FPGA design.
 
  In order to initialize this project, open the Vivado 2017.1
  client and navigate to the location of the cloned repository.
