@@ -26,7 +26,7 @@ module uart_tx #
         parameter p_DATA_WIDTH     = 8,
         parameter p_BAUD_SEL_WIDTH = 3,
 
-        // Baud counter rollover governed by n = (baud_period/clk_period)
+        // Baud counter rollover n = (baud_period/clk_period)
         parameter p_BAUD_4800      = 26042,
         parameter p_BAUD_9600      = 13021,
         parameter p_BAUD_19200     = 6511,
@@ -45,4 +45,20 @@ module uart_tx #
         output wire                        o_tx_running,
         output wire                        o_tx_done
     );
+
+    wire [p_DATA_WIDTH-1:0] w_tx_data;
+    wire                    w_tx_data_parity;
+
+    assign w_tx_data = i_tx_data;
+
+    uart_parity_gen # 
+        (
+            .p_DATA_WIDTH     (p_DATA_WIDTH)
+        )
+    inst_parity_gen 
+        (
+            .i_tx_data        (i_tx_data),
+            .o_tx_data_parity (w_tx_data_parity)
+        );
+
 endmodule
