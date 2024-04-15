@@ -23,8 +23,15 @@
 
 module uart_tx #
     (
-        parameter p_DATA_WIDTH = 8,
-        parameter p_BAUD_SEL_WIDTH = 3
+        parameter p_DATA_WIDTH     = 8,
+        parameter p_BAUD_SEL_WIDTH = 3,
+
+        // Baud counter rollover governed by n = (baud_period/clk_period)
+        parameter p_BAUD_4800      = 26042,
+        parameter p_BAUD_9600      = 13021,
+        parameter p_BAUD_19200     = 6511,
+        parameter p_BAUD_57600     = 2171,
+        parameter p_BAUD_115200    = 1086
     )
     (
         input  wire                        i_clk,
