@@ -1,0 +1,25 @@
+// File :            readme.txt
+// Title :           readme
+//
+// Author(s) :       Jonathan Roa
+//
+// Description :     Build instructions for the repository
+//
+// Revisions 
+//
+// Date        Name            REV#        Description 
+// ----------  --------------- ----------- -------------------------------------------
+// (04/14/24)  Jonathan Roa    1.0         Initial Revision
+
+ This project uses a TCL build script to maintain the FPGA
+ design.
+
+ In order to initialize this project, open the Vivado 2017.1
+ client and navigate to the location of the cloned repository.
+
+ Then, source the following TCL script:
+
+    1) create_proj.tcl
+
+ This script creates the working project directory, imports 
+ sources, and generates any block diagrams
