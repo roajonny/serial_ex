@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Webtalk v2017.1 (64-bit)
+# SW Build 1846317 on Fri Apr 14 18:55:03 MDT 2017
+# IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+# Start of session at: Mon Apr 15 20:42:18 2024
+# Process ID: 50252
+# Current directory: C:/Users/roajo/repos/serial_ex/serial_ex/serial_ex.sim/sim_1/behav
+# Command line: wbtcv.exe -mode batch -source C:/Users/roajo/repos/serial_ex/serial_ex/serial_ex.sim/sim_1/behav/xsim.dir/uart_tx_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/Users/roajo/repos/serial_ex/serial_ex/serial_ex.sim/sim_1/behav/webtalk.log
+# Journal file: C:/Users/roajo/repos/serial_ex/serial_ex/serial_ex.sim/sim_1/behav\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/roajo/repos/serial_ex/serial_ex/serial_ex.sim/sim_1/behav/xsim.dir/uart_tx_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Mon Apr 15 20:42:19 2024...
