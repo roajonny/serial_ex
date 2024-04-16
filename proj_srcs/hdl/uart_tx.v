@@ -86,7 +86,7 @@ module uart_tx #
         end
     end 
 
-    // Comparison ran on synchronous sources
+    // Inputs to baud pulse comparison are synchronous
     assign w_baud_pulse = (r_baud_ctr == r_baud_ctr_ref) ? 1'b1 : 1'b0;
 
     always @ (posedge i_clk) begin
