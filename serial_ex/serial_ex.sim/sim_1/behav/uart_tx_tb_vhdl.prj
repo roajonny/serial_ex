@@ -1,5 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  "../../../../proj_srcs/hdl/uart_tx_tb.vhd"
-
-# Do not sort compile order
-nosort

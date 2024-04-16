@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/roajo/repos/serial_ex/proj_srcs/hdl/uart_parity_gen.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module uart_parity_gen
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/roajo/repos/serial_ex/proj_srcs/hdl/uart_tx.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module uart_tx
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/roajo/repos/serial_ex/serial_ex/serial_ex.sim/sim_1/behav/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl
