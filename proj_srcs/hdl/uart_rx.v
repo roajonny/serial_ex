@@ -45,3 +45,5 @@ module uart_rx #
         output wire                        o_rx_running,
         output wire                        o_rx_done
     );
+
+endmodule
