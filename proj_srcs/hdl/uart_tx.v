@@ -5,15 +5,15 @@
 //
 // Author(s) :       Jonathan Roa
 //
-// Description :     LSB-first UART TX module w/ configurable baud rates
+// Description :     UART TX - LSB-first, programmable baud rate and data width 
+//
+//                   Default 8-bit data and assumes 125 MHz clock
 //                   
 //                   4800   : baud select 001
 //                   9600   : default
 //                   19200  : baud select 010
 //                   57600  : baud select 011
 //                   115200 : baud select 100
-//
-//                   Assumes 125 MHz clock and 8-bit data
 //
 // Revisions 
 //
