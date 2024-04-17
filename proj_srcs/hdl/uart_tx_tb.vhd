@@ -111,37 +111,25 @@ begin
     input_stim: process
     begin
 
-        wait for c_CLK_PERIOD * 100; 
-        
-        -- Test 1
+        -- Select TX data
         i_tx_data_tb  <= v_data_stim(0); 
-        i_baud_sel_tb <= v_baud_sel_stim(0);
-        i_wr_en_tb    <= '1', '0' after c_CLK_PERIOD;
-        wait for c_CLK_PERIOD * 100; 
-
-        -- Test 2
-        i_tx_data_tb  <= v_data_stim(1); 
-        i_baud_sel_tb <= v_baud_sel_stim(1);
-        i_wr_en_tb    <= '1', '0' after c_CLK_PERIOD;
-        wait for c_CLK_PERIOD * 100; 
-
-        -- Test 3
-        i_tx_data_tb  <= v_data_stim(2); 
-        i_baud_sel_tb <= v_baud_sel_stim(2);
-        i_wr_en_tb    <= '1', '0' after c_CLK_PERIOD;
-        wait for c_CLK_PERIOD * 100; 
-
-        -- Test 4
-        i_tx_data_tb  <= v_data_stim(3); 
-        i_baud_sel_tb <= v_baud_sel_stim(3);
-        i_wr_en_tb    <= '1', '0' after c_CLK_PERIOD;
-        wait for c_CLK_PERIOD * 100; 
-
-        -- Test 5
-        i_tx_data_tb  <= v_data_stim(4); 
+        -- i_tx_data_tb  <= v_data_stim(1); 
+        -- i_tx_data_tb  <= v_data_stim(2); 
+        -- i_tx_data_tb  <= v_data_stim(3); 
+        -- i_tx_data_tb  <= v_data_stim(4); 
+        
+        -- Select baud rate
+        -- i_baud_sel_tb <= v_baud_sel_stim(0);
+        -- i_baud_sel_tb <= v_baud_sel_stim(1);
+        -- i_baud_sel_tb <= v_baud_sel_stim(2);
+        -- i_baud_sel_tb <= v_baud_sel_stim(3);
         i_baud_sel_tb <= v_baud_sel_stim(4);
-        i_wr_en_tb    <= '1', '0' after c_CLK_PERIOD;
-        wait;
+
+        -- Start TX transaction by strobing write enable
+        wait for c_CLK_PERIOD/2;
+        wait for c_CLK_PERIOD * 100; 
+        i_wr_en_tb    <= '1', '0' after c_CLK_PERIOD*2;
+        wait; 
 
     end process input_stim;
 
