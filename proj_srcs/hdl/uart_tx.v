@@ -13,7 +13,7 @@
 //                   57600  : baud select 011
 //                   115200 : baud select 100
 //
-//                   Assumes 125 MHz clock
+//                   Assumes 125 MHz clock and 8-bit data
 //
 // Revisions 
 //
