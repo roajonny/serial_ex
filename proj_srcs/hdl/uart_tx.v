@@ -196,6 +196,4 @@ module uart_tx #
         endcase
     end
 
-
-
 endmodule
