@@ -46,4 +46,19 @@ module uart_rx #
         output wire                        o_rx_done
     );
 
+    reg  [1:0]           r_si_pipe;
+    wire                 w_start_shift;
+    
+    // Start shift sequence after detecting start bit
+    assign w_start_shift = ~r_si_pipe[1] & r_si_pipe[0];
+    always @ (posedge i_clk)
+    begin
+        if (!i_rst_n) begin 
+            r_si_pipe    <= {2{1'b1}};
+        end else begin
+            r_si_pipe[1] <= i_tx_data;
+            r_si_pipe[0] <= r_si_pipe[1];
+        end
+    end
+
 endmodule
