@@ -46,10 +46,22 @@ module uart_rx #
         output wire                        o_rx_done
     );
 
-    reg  [1:0]           r_si_pipe;
-    wire                 w_start_shift;
+    localparam s_IDLE       = 2'b00;
+    localparam s_RX_RUNNING = 2'b01;
+    localparam s_RX_DONE    = 2'b10;
+
+    reg  [1:0]          r_RX_STATE;
+    reg  [1:0]          r_RX_STATE_next;
+
+    reg  [1:0]          r_si_pipe;
+    wire                w_start_shift;
+    wire                w_rx_shift_done;
+    wire                w_baud_ctr_en;
+    reg                 r_baud_ctr_en;
+    reg                 r_rx_running;
+    reg                 r_rx_done;
     
-    // Start shift sequence after detecting start bit
+    // Shift sequence kicks off when the start bit is detected
     assign w_start_shift = ~r_si_pipe[1] & r_si_pipe[0];
     always @ (posedge i_clk) begin
         if (!i_rst_n) begin 
@@ -58,6 +70,55 @@ module uart_rx #
             r_si_pipe[1] <= i_tx_data;
             r_si_pipe[0] <= r_si_pipe[1];
         end
+    end
+    
+    // 2-block FSM controls baud + shift counters, and UART state
+    always @ (posedge i_clk) begin
+        if (!i_rst_n) begin
+            r_RX_STATE <= s_IDLE;
+        end else begin
+            r_RX_STATE <= r_RX_STATE_next;
+        end
+    end
+
+    assign w_baud_ctr_en = r_baud_ctr_en;
+    assign o_rx_running  = r_rx_running;
+    assign o_rx_done     = r_rx_done;
+    always @ (*) begin
+        case (r_RX_STATE)
+            s_IDLE: begin
+                r_rx_running  <= 1'b0;
+                r_rx_done     <= 1'b0;
+                r_baud_ctr_en <= 1'b0;
+                if (w_start_shift) begin
+                    r_RX_STATE_next <= s_RX_RUNNING;
+                end else begin
+                    r_RX_STATE_next <= s_IDLE;
+                end
+            end
+            s_RX_RUNNING: begin
+                r_rx_running  <= 1'b1;
+                r_rx_done     <= 1'b0;
+                r_baud_ctr_en <= 1'b1;
+                if (w_rx_shift_done) begin
+                    r_RX_STATE_next <= s_RX_DONE;
+                end else begin
+                    r_RX_STATE_next <= s_RX_RUNNING;
+                end 
+            end
+            s_RX_DONE: begin
+                r_rx_running  <= 1'b0;
+                r_rx_done     <= 1'b1;
+                r_baud_ctr_en <= 1'b0;
+                r_RX_STATE_next <= s_IDLE;
+            end
+            default: begin
+                r_rx_running  <= 1'b0;
+                r_rx_done     <= 1'b0;
+                r_baud_ctr_en <= 1'b0;
+                r_RX_STATE_next <= s_IDLE;
+            end
+        endcase
     end
 
 endmodule
