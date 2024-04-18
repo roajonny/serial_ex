@@ -51,8 +51,7 @@ module uart_rx #
     
     // Start shift sequence after detecting start bit
     assign w_start_shift = ~r_si_pipe[1] & r_si_pipe[0];
-    always @ (posedge i_clk)
-    begin
+    always @ (posedge i_clk) begin
         if (!i_rst_n) begin 
             r_si_pipe    <= {2{1'b1}};
         end else begin
