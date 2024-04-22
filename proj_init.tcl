@@ -35,9 +35,9 @@
 #    "C:/Users/roajo/repos/serial_ex/proj_srcs/vendor_ip/vio_0/vio_0.xci"
 #    "C:/Users/roajo/repos/serial_ex/proj_srcs/vendor_ip/ila_0/ila_0.xci"
 #    "C:/Users/roajo/repos/serial_ex/proj_srcs/constraints/Arty-Z7-10-Master.xdc"
-#    "C:/Users/roajo/repos/serial_ex/proj_srcs/sim/uart_tx_tb.vhd"
-#    "C:/Users/roajo/repos/serial_ex/proj_srcs/sim/uart_rx_tb.v"
-#    "C:/Users/roajo/repos/serial_ex/proj_srcs/sim/pulse_gen_tb.v"
+#    "C:/Users/roajo/repos/serial_ex/proj_srcs/hdl/uart_tx_tb.vhd"
+#    "C:/Users/roajo/repos/serial_ex/proj_srcs/hdl/uart_rx_tb.v"
+#    "C:/Users/roajo/repos/serial_ex/proj_srcs/hdl/pulse_gen_tb.v"
 #
 #*****************************************************************************************
 
@@ -195,14 +195,14 @@ if {[string equal [get_filesets -quiet sim_1] ""]} {
 # Set 'sim_1' fileset object
 set obj [get_filesets sim_1]
 set files [list \
- "[file normalize "$origin_dir/proj_srcs/sim/uart_tx_tb.vhd"]"\
- "[file normalize "$origin_dir/proj_srcs/sim/uart_rx_tb.v"]"\
- "[file normalize "$origin_dir/proj_srcs/sim/pulse_gen_tb.v"]"\
+ "[file normalize "$origin_dir/proj_srcs/hdl/uart_tx_tb.vhd"]"\
+ "[file normalize "$origin_dir/proj_srcs/hdl/uart_rx_tb.v"]"\
+ "[file normalize "$origin_dir/proj_srcs/hdl/pulse_gen_tb.v"]"\
 ]
 add_files -norecurse -fileset $obj $files
 
 # Set 'sim_1' fileset file properties for remote files
-set file "$origin_dir/proj_srcs/sim/uart_tx_tb.vhd"
+set file "$origin_dir/proj_srcs/hdl/uart_tx_tb.vhd"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sim_1] [list "*$file"]]
 set_property -name "file_type" -value "VHDL" -objects $file_obj
