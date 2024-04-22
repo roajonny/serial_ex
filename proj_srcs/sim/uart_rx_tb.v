@@ -15,10 +15,11 @@
 
 module uart_rx_tb ();
 
-    localparam p_CLK_PERIOD = 8;
-
-    localparam p_DATA_WIDTH = 8;
+    localparam p_CLK_PERIOD     = 8;
+    localparam p_DATA_WIDTH     = 8;
     localparam p_BAUD_SEL_WIDTH = 3;
+    localparam p_STIM_QTY       = 5;
+
     reg                         r_clk;
     reg                         r_rst_n;
     reg  [p_BAUD_SEL_WIDTH-1:0] r_baud_sel; 
@@ -31,6 +32,16 @@ module uart_rx_tb ();
     wire [p_DATA_WIDTH-1:0]     w_rx_data; 
     wire                        w_rx_running;
     wire                        w_rx_done;
+    
+    integer                     error_cnt;
+    integer                     index;
+    reg  [p_DATA_WIDTH-1:0]     test_stim [p_STIM_QTY-1:0] = {
+                                                               8'hAA,
+                                                               8'h7B,
+                                                               8'h03,
+                                                               8'h28,
+                                                               8'h12
+                                                             };
 
     uart_tx inst_uart_tx (
         .i_clk        (r_clk),
@@ -62,55 +73,99 @@ module uart_rx_tb ();
 
     initial begin
 
+        error_cnt <= 0;
+
         // Test 1: 9600 baud
         init();
         set_baud(3'b000);
         assert_reset();
-        transmit(8'hAA); wait_5ms();
-        transmit(8'h7B); wait_5ms();
-        transmit(8'h03); wait_5ms();
-        transmit(8'h28); wait_5ms();
-        transmit(8'h12); wait_5ms();
+        for (index = 0; index < p_STIM_QTY; index = index + 1) begin
+        transmit(test_stim[index]); wait_5ms();
+            if (w_rx_data != test_stim[index]) begin
+                error_cnt <= error_cnt + 1;
+                $error  ("INCORRECT OUTPUT");
+                $display("Error occurred at: ", $time);
+                $write  ("Expected: %H ", test_stim[index]);
+                $display("Actual: %H ", w_rx_data);
+            end else begin
+                error_cnt <= error_cnt;
+            end
+        end
 
         // Test 2: 4800 baud
         init();
         set_baud(3'b001);
         assert_reset();
-        transmit(8'hAA); wait_5ms();
-        transmit(8'h7B); wait_5ms();
-        transmit(8'h03); wait_5ms();
-        transmit(8'h28); wait_5ms();
-        transmit(8'h12); wait_5ms();
+        for (index = 0; index < p_STIM_QTY; index = index + 1) begin
+        transmit(test_stim[index]); wait_5ms();
+            if (w_rx_data != test_stim[index]) begin
+                error_cnt <= error_cnt + 1;
+                $error  ("INCORRECT OUTPUT");
+                $display("Error occurred at: ", $time);
+                $write  ("Expected: %H ", test_stim[index]);
+                $display("Actual: %H ", w_rx_data);
+            end else begin
+                error_cnt <= error_cnt;
+            end
+        end
 
         // Test 3: 19200 baud
         init();
         set_baud(3'b010);
         assert_reset();
-        transmit(8'hAA); wait_5ms();
-        transmit(8'h7B); wait_5ms();
-        transmit(8'h03); wait_5ms();
-        transmit(8'h28); wait_5ms();
-        transmit(8'h12); wait_5ms();
+        for (index = 0; index < p_STIM_QTY; index = index + 1) begin
+        transmit(test_stim[index]); wait_5ms();
+            if (w_rx_data != test_stim[index]) begin
+                error_cnt <= error_cnt + 1;
+                $error  ("INCORRECT OUTPUT");
+                $display("Error occurred at: ", $time);
+                $write  ("Expected: %H ", test_stim[index]);
+                $display("Actual: %H ", w_rx_data);
+            end else begin
+                error_cnt <= error_cnt;
+            end
+        end
 
         // Test 4: 57600 baud
         init();
         set_baud(3'b011);
         assert_reset();
-        transmit(8'hAA); wait_5ms();
-        transmit(8'h7B); wait_5ms();
-        transmit(8'h03); wait_5ms();
-        transmit(8'h28); wait_5ms();
-        transmit(8'h12); wait_5ms();
+        for (index = 0; index < p_STIM_QTY; index = index + 1) begin
+        transmit(test_stim[index]); wait_5ms();
+            if (w_rx_data != test_stim[index]) begin
+                error_cnt <= error_cnt + 1;
+                $error  ("INCORRECT OUTPUT");
+                $display("Error occurred at: ", $time);
+                $write  ("Expected: %H ", test_stim[index]);
+                $display("Actual: %H ", w_rx_data);
+            end else begin
+                error_cnt <= error_cnt;
+            end
+        end
 
         // Test 5: 115200 baud
         init();
         set_baud(3'b100);
         assert_reset();
-        transmit(8'hAA); wait_5ms();
-        transmit(8'h7B); wait_5ms();
-        transmit(8'h03); wait_5ms();
-        transmit(8'h28); wait_5ms();
-        transmit(8'h12); wait_5ms();
+        for (index = 0; index < p_STIM_QTY; index = index + 1) begin
+        transmit(test_stim[index]); wait_5ms();
+            if (w_rx_data != test_stim[index]) begin
+                error_cnt <= error_cnt + 1;
+                $error  ("INCORRECT OUTPUT");
+                $display("Error occurred at: ", $time);
+                $write  ("Expected: %H ", test_stim[index]);
+                $display("Actual: %H ", w_rx_data);
+            end else begin
+                error_cnt <= error_cnt;
+            end
+        end
+
+        $display("Error count: %2D", error_cnt);
+        if (error_cnt == 0) begin
+            $display("ALL TESTS PASSED");
+        end else begin
+            $display("REVIEW SIM RESULTS");
+        end
     end
 
     task transmit(input [7:0] tx_data); begin
@@ -125,7 +180,7 @@ module uart_rx_tb ();
         #(p_CLK_PERIOD*5); r_rst_n <= 1'b0;
         #(p_CLK_PERIOD*5); r_rst_n <= 1'b1;
     end
-    endtask;
+    endtask
 
     task wait_5ms(); begin
         #(p_CLK_PERIOD*625000);
