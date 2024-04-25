@@ -78,7 +78,7 @@ module uart_rx_tb ();
         // Test 1: 9600 baud
         init();
         set_baud(3'b000);
-        assert_reset();
+        assert_reset(); wait_5ms();
         for (index = 0; index < p_STIM_QTY; index = index + 1) begin
         transmit(test_stim[index]); wait_5ms();
             if (w_rx_data != test_stim[index]) begin
@@ -177,8 +177,8 @@ module uart_rx_tb ();
     endtask
 
     task assert_reset(); begin
-        #(p_CLK_PERIOD*5); r_rst_n <= 1'b0;
-        #(p_CLK_PERIOD*5); r_rst_n <= 1'b1;
+        r_rst_n <= 1'b0; #(p_CLK_PERIOD*5);
+        r_rst_n <= 1'b1;
     end
     endtask
 

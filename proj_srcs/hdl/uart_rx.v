@@ -81,8 +81,8 @@ module uart_rx #
 
     wire [p_DATA_WIDTH-1:0]     w_rx_data;
 
-    // Shift sequence kicks off when the start bit is detected
-    assign w_start_shift = ~r_si_pipe[1] & r_si_pipe[0];
+    // Synchronizes the serial input
+    assign w_start_shift = ~r_si_pipe[0];
     always @ (posedge i_clk) begin
         if (!i_rst_n) begin 
             r_si_pipe    <= {2{1'b1}};
